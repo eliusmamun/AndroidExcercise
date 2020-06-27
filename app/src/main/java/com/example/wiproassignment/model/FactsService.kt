@@ -7,7 +7,7 @@ class FactsService {
     @Inject
     lateinit var api: FactsApi
 
-    suspend fun getCountries(): List<Facts> {
+    suspend fun getCountries(): Facts {
         return api.getFacts()
     }
 }
