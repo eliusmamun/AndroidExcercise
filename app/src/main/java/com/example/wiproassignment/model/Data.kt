@@ -8,7 +8,7 @@ data class Facts(
     val title: String?,
 
     @SerializedName("rows")
-    val rows: List<Rows>?
+    val rows: ArrayList<Rows>
 
 
 )

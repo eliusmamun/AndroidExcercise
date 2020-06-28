@@ -1,7 +1,7 @@
 package com.example.wiproassignment.di
 
-import com.example.wiproassignment.model.FactsApi
-import com.example.wiproassignment.model.FactsService
+import com.example.wiproassignment.model.ListDataApi
+import com.example.wiproassignment.model.ListDataService
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -13,18 +13,18 @@ class ApiModule {
     private val BASE_URL = "https://dl.dropboxusercontent.com"
 
     @Provides
-    fun provideFactsApi(): FactsApi {
+    fun provideFactsApi(): ListDataApi {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(FactsApi::class.java)
+            .create(ListDataApi::class.java)
 
     }
 
 
     @Provides
-    fun provideFactsService() : FactsService {
-        return FactsService()
+    fun provideFactsService() : ListDataService {
+        return ListDataService()
     }
 }
