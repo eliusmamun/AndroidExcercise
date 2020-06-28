@@ -20,7 +20,9 @@ class ListDataViewModel :ViewModel(){
 
     var job: Job? = null
     val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        onError("Exception: ${throwable.localizedMessage}")
+        CoroutineScope(Dispatchers.Main).launch {
+            onError("Exception: ${throwable.localizedMessage}")
+        }
     }
 
     private val facts: MutableLiveData<Facts> by lazy {
@@ -56,13 +58,11 @@ class ListDataViewModel :ViewModel(){
             }
         }
 
-
-
     }
 
     private fun onError(message: String) {
-        factsLoadError.value = message
-        loading.value = false
+            factsLoadError.value = message
+            loading.value = false
     }
 
     override fun onCleared() {
