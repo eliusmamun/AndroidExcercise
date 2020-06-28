@@ -8,6 +8,7 @@ import com.example.wiproassignment.model.ListDataService
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
+
 class ListDataViewModel :ViewModel(){
 
     @Inject
@@ -22,17 +23,25 @@ class ListDataViewModel :ViewModel(){
         onError("Exception: ${throwable.localizedMessage}")
     }
 
-    val facts = MutableLiveData<Facts>()
+    private val facts: MutableLiveData<Facts> by lazy {
+        fetchFacts()
+        MutableLiveData<Facts>()
+    }
+
     val factsLoadError = MutableLiveData<String?>()
     val loading = MutableLiveData<Boolean>()
+
 
     fun refresh() {
         fetchFacts()
     }
 
-    private fun fetchFacts() {
-        loading.value = true
+    fun getFactsObservable(): MutableLiveData<Facts> {
+        return facts
+    }
 
+    private fun fetchFacts()  {
+        loading.value = true
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val response = factsService.getFacts()
             withContext(Dispatchers.Main) {
@@ -43,8 +52,12 @@ class ListDataViewModel :ViewModel(){
                 } else {
                     onError("Error: ${response.message()}")
                 }
+
             }
         }
+
+
+
     }
 
     private fun onError(message: String) {

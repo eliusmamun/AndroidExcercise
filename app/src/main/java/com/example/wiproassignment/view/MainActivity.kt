@@ -1,4 +1,4 @@
-package com.example.wiproassignment
+package com.example.wiproassignment.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,7 +6,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.wiproassignment.view.ListDataAdapter
+import com.example.wiproassignment.R
 import com.example.wiproassignment.viewmodel.ListDataViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         viewModel = ViewModelProvider(this).get(ListDataViewModel::class.java)
-        viewModel.refresh()
 
         factsList.apply {
             layoutManager = LinearLayoutManager(context)
@@ -30,25 +29,25 @@ class MainActivity : AppCompatActivity() {
 
         observeViewModel()
 
-        // This is  to implement pull to refresh
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = false
             viewModel.refresh()
         }
     }
 
-
-
     fun observeViewModel() {
-        viewModel.facts.observe(this, Observer { facts ->
+        viewModel.getFactsObservable().observe(this, Observer { facts ->
             facts?.let {
                 factsList.visibility = View.VISIBLE
-               factsAdapter.updateFacts(it.rows)
+                factsAdapter.updateFacts(it.rows)
+                supportActionBar?.apply {
+                    title = it.title
+                }
             }
         })
 
         viewModel.factsLoadError.observe(this, Observer { isError ->
-           // list_error.visibility = if (isError == null) View.GONE else View.VISIBLE
+            list_error.visibility = if (isError == null) View.GONE else View.VISIBLE
         })
 
         viewModel.loading.observe(this, Observer { isLoading ->

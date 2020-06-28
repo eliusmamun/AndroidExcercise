@@ -8,7 +8,6 @@ import com.example.wiproassignment.R
 import com.example.wiproassignment.databinding.ListItemBinding
 import com.example.wiproassignment.model.Rows
 
-
 class ListDataAdapter() :
     RecyclerView.Adapter<ListDataAdapter.FactsViewHolder>() {
 
@@ -18,8 +17,6 @@ class ListDataAdapter() :
         facts.clear()
         facts.addAll(newFacts)
         notifyDataSetChanged()
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FactsViewHolder {
@@ -35,7 +32,9 @@ class ListDataAdapter() :
     override fun getItemCount() = facts.size
 
     override fun onBindViewHolder(holder: FactsViewHolder, position: Int) {
-        holder.bind(facts[position])
+        val item = facts[position];
+      //  if(item.title == null && item.description== null && item.image==null) return;
+        holder.bind(item)
     }
 
     class FactsViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
