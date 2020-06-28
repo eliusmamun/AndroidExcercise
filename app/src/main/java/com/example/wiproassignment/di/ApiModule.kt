@@ -10,12 +10,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Module
 class ApiModule {
 
-    private val BASE_URL = "https://dl.dropboxusercontent.com"
+    private val baseUrl = "https://dl.dropboxusercontent.com"
 
     @Provides
     fun provideFactsApi(): ListDataApi {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ListDataApi::class.java)

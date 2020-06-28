@@ -8,10 +8,10 @@ import com.example.wiproassignment.R
 import com.example.wiproassignment.databinding.ListItemBinding
 import com.example.wiproassignment.model.Rows
 
-class ListDataAdapter() :
+class ListDataAdapter :
     RecyclerView.Adapter<ListDataAdapter.FactsViewHolder>() {
 
-    var facts: ArrayList<Rows> = ArrayList();
+    private var facts: ArrayList<Rows> = ArrayList()
 
     fun updateFacts(newFacts: ArrayList<Rows>) {
         facts.clear()
@@ -32,12 +32,12 @@ class ListDataAdapter() :
     override fun getItemCount() = facts.size
 
     override fun onBindViewHolder(holder: FactsViewHolder, position: Int) {
-        val item = facts[position];
+        val item = facts[position]
       //  if(item.title == null && item.description== null && item.image==null) return;
         holder.bind(item)
     }
 
-    class FactsViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class FactsViewHolder(private val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Rows) {
             binding.apply {
                 title = item.title

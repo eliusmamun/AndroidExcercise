@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var viewModel: ListDataViewModel
+    private lateinit var viewModel: ListDataViewModel
 
     private val factsAdapter = ListDataAdapter()
 
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun observeViewModel() {
+    private fun observeViewModel() {
         viewModel.getFactsObservable().observe(this, Observer { facts ->
             facts?.let {
                 factsList.visibility = View.VISIBLE

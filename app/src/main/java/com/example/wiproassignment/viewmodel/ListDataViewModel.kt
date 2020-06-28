@@ -18,8 +18,8 @@ class ListDataViewModel :ViewModel(){
         DaggerApiComponent.create().inject(this)
     }
 
-    var job: Job? = null
-    val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+    private var job: Job? = null
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         CoroutineScope(Dispatchers.Main).launch {
             onError("Exception: ${throwable.localizedMessage}")
         }
