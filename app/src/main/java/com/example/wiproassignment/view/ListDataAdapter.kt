@@ -33,15 +33,14 @@ class ListDataAdapter :
 
     override fun onBindViewHolder(holder: FactsViewHolder, position: Int) {
         val item = facts[position]
-      //  if(item.title == null && item.description== null && item.image==null) return;
         holder.bind(item)
     }
 
     class FactsViewHolder(private val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Rows) {
             binding.apply {
-                title = item.title
-                description = item.description
+                title = if(null == item.title || item.title.isEmpty()) "--" else item.title
+                description = if(null == item.description || item.description.isEmpty()) "--" else item.description
                 image = item.image ?: ""
             }
         }

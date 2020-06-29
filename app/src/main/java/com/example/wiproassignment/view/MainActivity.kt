@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: ListDataViewModel
+    lateinit var viewModel: ListDataViewModel
 
     private val factsAdapter = ListDataAdapter()
 

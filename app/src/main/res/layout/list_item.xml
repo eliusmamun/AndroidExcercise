@@ -52,7 +52,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="@dimen/standard_padding"
-                android:src="@mipmap/ic_launcher"
                 app:loadImage="@{image}"
                 tools:ignore="ContentDescription" />
         </LinearLayout>

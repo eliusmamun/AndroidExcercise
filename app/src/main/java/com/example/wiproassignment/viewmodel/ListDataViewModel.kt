@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.wiproassignment.di.DaggerApiComponent
 import com.example.wiproassignment.model.Facts
 import com.example.wiproassignment.model.ListDataService
+import com.example.wiproassignment.utils.EspressoIdlingResource
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -25,7 +26,7 @@ class ListDataViewModel :ViewModel(){
         }
     }
 
-    private val facts: MutableLiveData<Facts> by lazy {
+    val facts: MutableLiveData<Facts> by lazy {
         fetchFacts()
         MutableLiveData<Facts>()
     }
@@ -44,7 +45,9 @@ class ListDataViewModel :ViewModel(){
 
     private fun fetchFacts()  {
         loading.value = true
+        EspressoIdlingResource.increment()
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+           delay(2000L)
             val response = factsService.getFacts()
             withContext(Dispatchers.Main) {
                 if(response.isSuccessful) {
@@ -54,11 +57,12 @@ class ListDataViewModel :ViewModel(){
                 } else {
                     onError("Error: ${response.message()}")
                 }
-
+                EspressoIdlingResource.decrement()
             }
         }
 
     }
+
 
     private fun onError(message: String) {
             factsLoadError.value = message
