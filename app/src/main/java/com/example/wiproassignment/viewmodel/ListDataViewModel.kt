@@ -47,7 +47,6 @@ class ListDataViewModel :ViewModel(){
         loading.value = true
         EspressoIdlingResource.increment()
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-           delay(2000L)
             val response = factsService.getFacts()
             withContext(Dispatchers.Main) {
                 if(response.isSuccessful) {
@@ -57,7 +56,6 @@ class ListDataViewModel :ViewModel(){
                 } else {
                     onError("Error: ${response.message()}")
                 }
-                EspressoIdlingResource.decrement()
             }
         }
 

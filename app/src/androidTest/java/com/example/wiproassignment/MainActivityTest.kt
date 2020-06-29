@@ -17,10 +17,7 @@ import com.example.wiproassignment.view.ListDataAdapter
 import com.example.wiproassignment.view.MainActivity
 import com.example.wiproassignment.viewmodel.ListDataViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.hamcrest.Matchers.*
 import org.junit.*
 import org.junit.Assert.assertEquals
@@ -61,6 +58,7 @@ class MainActivityTest {
 
     }
 
+
     @Test
     fun testRecyclerViewScroll() {
         val recyclerView: RecyclerView = activityRule.activity.findViewById(R.id.factsList)
@@ -75,24 +73,21 @@ class MainActivityTest {
                 )
             )
     }
-
-
+    
 
     @Test
     fun onLaunchWithError() {
+        Thread.sleep(2000L)
+        CoroutineScope(Dispatchers.Main).launch {
+            activityRule.activity.viewModel.factsLoadError.value = "Error"
+            activityRule.activity.viewModel.loading.value = false
 
-        runBlocking {
-            withContext(Dispatchers.Main) {
-                activityRule.activity.viewModel.facts.value = null
-                activityRule.activity.viewModel.factsLoadError.value = "Error"
-            }
         }
-
-        onView(withId(R.id.loading_view))
-            .check(matches(not(isDisplayed())))
         onView(withId(R.id.list_error))
             .check(matches(isDisplayed()))
-            .check(matches(withText(R.string.error_msg)))
+        onView(withId(R.id.loading_view))
+            .check(matches(not(isDisplayed())))
+
 
     }
 

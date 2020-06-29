@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.wiproassignment.R
 import com.example.wiproassignment.databinding.ListItemBinding
 import com.example.wiproassignment.model.Rows
+import com.example.wiproassignment.utils.EspressoIdlingResource
 
 class ListDataAdapter :
     RecyclerView.Adapter<ListDataAdapter.FactsViewHolder>() {
@@ -17,6 +18,8 @@ class ListDataAdapter :
         facts.clear()
         facts.addAll(newFacts)
         notifyDataSetChanged()
+        EspressoIdlingResource.decrement()
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FactsViewHolder {
