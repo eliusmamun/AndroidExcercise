@@ -73,7 +73,7 @@ class MainActivityTest {
                 )
             )
     }
-    
+
 
     @Test
     fun onLaunchWithError() {

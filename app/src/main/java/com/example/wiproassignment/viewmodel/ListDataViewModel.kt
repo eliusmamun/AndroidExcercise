@@ -43,6 +43,9 @@ class ListDataViewModel :ViewModel(){
         return facts
     }
 
+    /**
+     * Fetches the data from the external api
+     */
     private fun fetchFacts()  {
         loading.value = true
         EspressoIdlingResource.increment()
@@ -57,16 +60,25 @@ class ListDataViewModel :ViewModel(){
                     onError("Error: ${response.message()}")
                 }
             }
+            EspressoIdlingResource.decrement()
+
+
         }
 
     }
 
 
+    /**
+     * Handles the Error
+     */
     private fun onError(message: String) {
             factsLoadError.value = message
             loading.value = false
     }
 
+    /**
+     * Invokes when viewmodel destroys
+     */
     override fun onCleared() {
         super.onCleared()
         job?.cancel()

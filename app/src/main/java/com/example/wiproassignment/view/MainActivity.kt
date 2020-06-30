@@ -29,12 +29,18 @@ class MainActivity : AppCompatActivity() {
 
         observeViewModel()
 
+        /**
+         * Invokes when user pulls down to refresh
+         */
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = false
             viewModel.refresh()
         }
     }
 
+    /**
+     * Register the observers
+     */
     private fun observeViewModel() {
         viewModel.getFactsObservable().observe(this, Observer { facts ->
             facts?.let {

@@ -15,6 +15,7 @@ class ListDataAdapter :
     private var facts: ArrayList<Rows> = ArrayList()
 
     fun updateFacts(newFacts: ArrayList<Rows>) {
+        EspressoIdlingResource.increment()
         facts.clear()
         facts.addAll(newFacts)
         notifyDataSetChanged()
